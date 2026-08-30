@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-deep: #081B33;
+  --color-navy: #0B2C4D;
+  --color-gold: #E8A93C;
+  --color-teal: #2E8B7A;
+  --color-concrete: #8B95A1;
+  --color-app-bg: #F5F6F8;
+  --color-danger: #C1443C;
+  
+  --font-heading: "Oswald", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-app-bg);
+    color: var(--color-navy-deep);
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+  }
+}
+
+.blueprint-grid {
+  background-image: 
+    linear-gradient(rgba(11, 44, 77, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 44, 77, 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@keyframes scan {
+  0%   { top: -2px; }
+  50%  { top: 100%; }
+  100% { top: -2px; }
+}
+
+@keyframes slowZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
+.mask-image-b {
+  mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+}
