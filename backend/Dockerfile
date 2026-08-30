@@ -10,6 +10,9 @@ ENV PYTHONUNBUFFERED 1
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Cache bust to force fresh code on every deploy
+ARG CACHEBUST=1
+
 # Copy the rest of the application
 COPY . .
 
