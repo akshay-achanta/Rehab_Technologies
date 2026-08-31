@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 from app.database import Base, engine
-from app.routers import auth, services, requests, users
+from app.routers import auth, services, requests, users, employees
 from app import models
 
 load_dotenv()
@@ -32,6 +32,7 @@ app.include_router(auth.router)
 app.include_router(services.router)
 app.include_router(requests.router)
 app.include_router(users.router)
+app.include_router(employees.router)
 
 
 @app.get("/", tags=["health"])

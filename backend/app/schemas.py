@@ -29,10 +29,28 @@ class UserOut(BaseModel):
     mobile: str
     email: str
     role: str
+    department: Optional[str] = None
     created_at: datetime
 
     class Config:
         from_attributes = True
+
+class EmployeeCreate(BaseModel):
+    name: str
+    mobile: str
+    email: EmailStr
+    password: str
+    department: Optional[str] = None
+
+class EmployeeUpdate(BaseModel):
+    name: Optional[str] = None
+    mobile: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
+    department: Optional[str] = None
+
+class AssignEmployeesRequest(BaseModel):
+    employee_ids: list[uuid.UUID]
 
 
 # --- Services ---
@@ -93,6 +111,13 @@ class UserOut_Mini(BaseModel):
         from_attributes = True
 
 
+class EmployeeAssignmentOut(BaseModel):
+    id: uuid.UUID
+    employee: UserOut_Mini
+
+    class Config:
+        from_attributes = True
+
 class ServiceRequestOut(BaseModel):
     id: str
     user_id: uuid.UUID
@@ -106,6 +131,7 @@ class ServiceRequestOut(BaseModel):
     updated_at: datetime
     service: Optional[ServiceOut_Mini] = None
     user: Optional[UserOut_Mini] = None
+    assignments: list[EmployeeAssignmentOut] = []
 
     class Config:
         from_attributes = True

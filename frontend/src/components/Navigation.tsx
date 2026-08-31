@@ -5,29 +5,53 @@ import { usePathname, useRouter } from "next/navigation";
 import { Home, Briefcase, FileText, User } from "lucide-react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { apiLogout } from "@/lib/api";
+import { apiLogout, apiAdminLogout } from "@/lib/api";
 
 export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     setLoggedIn(!!(sessionStorage.getItem("rehab_token") || localStorage.getItem("rehab_token")));
+    setAdminLoggedIn(!!(sessionStorage.getItem("rehab_admin_token") || localStorage.getItem("rehab_admin_token")));
+    setRole(sessionStorage.getItem("rehab_role"));
   }, [pathname]); // re-check on every page change
 
-  const allLinks = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "Services", href: "/services", icon: Briefcase },
-    { name: "My Requests", href: "/my-requests", icon: FileText },
-    { name: "Profile", href: "/profile", icon: User },
+  const publicLinks = [
+    { name: "Home",     href: "/",           icon: Home },
+    { name: "Services", href: "/#services",  icon: Briefcase },
+    { name: "Projects", href: "/#projects",  icon: Briefcase },
+    { name: "About",    href: "/#about",     icon: User },
   ];
 
-  const links = loggedIn ? allLinks : allLinks.filter(l => l.name === "Home");
+  const customerLinks = [
+    { name: "Home",        href: "/",            icon: Home },
+    { name: "Services",   href: "/services",    icon: Briefcase },
+    { name: "My Requests", href: "/my-requests", icon: FileText },
+    { name: "Profile",     href: "/profile",     icon: User },
+  ];
+
+  const adminEmployeeLinks = [
+    { name: "Home", href: "/", icon: Home },
+  ];
+
+  // Determine which link set to show
+  let links = publicLinks;
+  if (role === "admin" || role === "employee" || adminLoggedIn) {
+    links = adminEmployeeLinks;
+  } else if (loggedIn && role === "customer") {
+    links = customerLinks;
+  }
 
   const handleLogout = () => {
     apiLogout();
+    apiAdminLogout();
     setLoggedIn(false);
+    setAdminLoggedIn(false);
+    setRole(null);
     router.push("/");
   };
 
@@ -72,7 +96,7 @@ export default function Navigation() {
             </div>
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                {loggedIn ? (
+                {(loggedIn || adminLoggedIn) ? (
                   <button onClick={handleLogout} className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-danger shadow-sm hover:bg-red-800 transition-colors">
                     Log Out
                   </button>

@@ -10,6 +10,7 @@ import enum
 class UserRole(str, enum.Enum):
     customer = "customer"
     admin = "admin"
+    employee = "employee"
 
 
 class RequestStatus(str, enum.Enum):
@@ -28,9 +29,22 @@ class User(Base):
     email = Column(String, unique=True, nullable=False, index=True)
     password_hash = Column(String, nullable=False)
     role = Column(String, default="customer", nullable=False)
+    department = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     requests = relationship("ServiceRequest", back_populates="user")
+    assignments = relationship("RequestAssignment", back_populates="employee")
+
+class RequestAssignment(Base):
+    __tablename__ = "request_assignments"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    request_id = Column(String, ForeignKey("service_requests.id"), nullable=False)
+    employee_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    assigned_at = Column(DateTime, default=datetime.utcnow)
+    
+    request = relationship("ServiceRequest", back_populates="assignments")
+    employee = relationship("User", back_populates="assignments")
 
 
 class Service(Base):
@@ -62,3 +76,4 @@ class ServiceRequest(Base):
 
     user = relationship("User", back_populates="requests")
     service = relationship("Service", back_populates="requests")
+    assignments = relationship("RequestAssignment", back_populates="request", cascade="all, delete-orphan")
