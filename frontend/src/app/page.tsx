@@ -301,11 +301,12 @@ export default function Home() {
               <div className="bg-navy-deep rounded-2xl p-8 text-white">
                 <div className="text-gold font-heading text-4xl font-bold mb-2">&ldquo;</div>
                 <blockquote className="text-lg italic leading-relaxed text-gray-200">
-                  We Repair · We Strengthen · We Protect. Our mission is to restore the confidence and safety of those who rely on these structures every day.
+                  Transforming building repairs scientifically & professionally. Our mission is to make every existing building safe, durable, and beautiful.
                 </blockquote>
                 <div className="mt-6 pt-6 border-t border-white/10">
-                  <div className="font-bold text-gold">Vamshi Krishna ManthriPragada</div>
-                  <div className="text-sm text-gray-400">Founder & Principal Engineer, Rehab Technologies Pvt. Ltd.</div>
+                  <div className="font-bold text-gold">Dr. P. Srinivasa Reddy</div>
+                  <div className="text-sm text-gray-400">CEO, Rehab Technologies</div>
+                  <div className="text-xs text-gray-500 mt-1">Advocate & Techno-Legal Expert (34+ Years Exp)</div>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
