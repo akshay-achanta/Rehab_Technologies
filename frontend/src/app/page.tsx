@@ -210,8 +210,8 @@ export default function Home() {
                   <User className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="font-bold text-gold">John Doe</div>
-                  <div className="text-sm text-gray-400">Founder & Principal Engineer</div>
+                  <div className="font-bold text-gold">Dr. P. Srinivasa Reddy</div>
+                  <div className="text-sm text-gray-400">CEO, Rehab Technologies</div>
                 </div>
               </div>
             </div>
